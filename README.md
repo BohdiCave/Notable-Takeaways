@@ -16,6 +16,8 @@ An express.js app to write, save, and delete notes using JSON data format for st
 
 ## Links
 
-Deployed application on Heroku: 
+[Deployed application on Heroku](https://sleepy-beach-08943.herokuapp.com/) 
 
-## Screenshots
+[GitHub Repository](https://github.com/BohdiCave/Notable-Takeaways)
+
+
