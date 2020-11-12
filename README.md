@@ -1,5 +1,7 @@
 # Notable Takeaways
 
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
+
 An express.js app to write, save, and delete notes using JSON data format for storage and retrieval.
 
 ## Features
