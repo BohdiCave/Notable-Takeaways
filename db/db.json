@@ -1,18 +1,7 @@
 [
   {
     "title": "Test title",
-    "text": "Test text"
-  },
-  {
-    "title": "Yo",
-    "text": "rapshody"
-  },
-  {
-    "title": "Hey",
-    "text": "You"
-  },
-  {
-    "title": "Yes",
-    "text": "now"
+    "text": "Test text",
+    "id": "0000000000000"
   }
-]
+] 
