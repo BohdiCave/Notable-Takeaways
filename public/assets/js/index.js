@@ -50,9 +50,7 @@ const $noteList = $(".list-group");
     const renderNoteList = notes => {
       // Emptying the sidebar of previously loaded note list
         $noteList.empty();
-      // Setting up the new note list as an empty array
-        const noteListItems = [];
-      // Returns jquery <li> object with text and delete button (unless withDeleteButton is set to false)
+      // Returns <li> object with text and delete button (unless withDeleteButton is set to false)
         const create$li = (title, text, id, withDeleteButton = true) => {
           const $li = $("<li class='list-group-item'>");
           $li.attr("title", title);
@@ -69,15 +67,16 @@ const $noteList = $(".list-group");
           }
           return $li;
         };
+      // Setting up the new note list as an empty array
+        const noteListItems = [];
       // If no notes saved, returns the appropriate message
       // If there are saved notes, fills the array with note titles (<li> objects)
         if (notes.length === 0) {
-          noteListItems.push(create$li("No saved Notes", false));
+          noteListItems.push(create$li("No saved Notes", null, null, false));
         } else {
-          for (let i = 0; i < notes.length; i++) {
-            const $li = create$li(notes[i].title, notes[i].text, notes[i].id);
-            noteListItems.push($li);
-          }
+          Array.from(notes).forEach(note => {
+            noteListItems.push(create$li(note.title, note.text, note.id, true));
+          });
         }
       // The objects are appended to the sidebar <ul> list
         $noteList.append(noteListItems);
@@ -98,14 +97,14 @@ const $noteList = $(".list-group");
       return $.ajax({url: "/api/notes", data: note, method: "POST"});
     };
   // Getting: data from inputs; Saving: --> db; Updating: note list and active note view
-    const handleNoteSave = function () {
+    const handleNoteSave = () => {
       const newNote = {
         title: $noteTitle.val(),
         text: $noteText.val(),
         id: Date.now()
       };
+      activeNote = newNote;
       saveNote(newNote).then(() => {
-        activeNote = newNote;
         getAndRenderNotes();
         renderActiveNote();
       });

@@ -5,22 +5,24 @@ let db = require("../db/db.json");
 module.exports = (app) => {
 
     app.get("/api/notes", (req, res) => {
-        res.json(db);
+        let notes = db;
+        res.json(notes);
     });
 
     app.post("/api/notes", (req, res) => {
         let note = req.body;
-        db.push(note);
-        db = JSON.stringify(db, null, 2);
-        fs.writeFile("db/db.json", db, err => {if (err) throw err;});
+        let notes = db;
+        notes.push(note);
+        notes = JSON.stringify(notes, null, 2);
+        fs.writeFile("db/db.json", notes, err => {if (err) throw err;});
         res.json(note);
     });
 
     app.delete("/api/notes/:id", (req, res) => {
         let notes = db;
-        notes.forEach(note => {
+        notes.forEach((note, index, notes) => {
             if (note.id === req.params.id) {
-                notes.splice(note, 1);
+                notes.splice(index, 1);
             }
         });
         notes = JSON.stringify(notes, null, 2);
