@@ -13,7 +13,7 @@ module.exports = (app) => {
         db.push(note);
         db = JSON.stringify(db, null, 2);
         fs.writeFile("db/db.json", db, err => {if (err) throw err;});
-        return note;
+        res.json(note);
     });
 
     app.delete("/api/notes/:id", (req, res) => {
