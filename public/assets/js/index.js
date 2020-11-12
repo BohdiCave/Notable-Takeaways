@@ -47,7 +47,7 @@ const $noteList = $(".list-group");
       return $.ajax({url: "/api/notes", method: "GET"});
     };
   // R: note list (titles only) --> sidebar
-    const renderNoteList = (notes) => {
+    const renderNoteList = notes => {
       // Emptying the sidebar of previously loaded note list
         $noteList.empty();
       // Setting up the new note list as an empty array
@@ -70,15 +70,15 @@ const $noteList = $(".list-group");
           return $li;
         };
       // If no notes saved, returns the appropriate message
+      // If there are saved notes, fills the array with note titles (<li> objects)
         if (notes.length === 0) {
           noteListItems.push(create$li("No saved Notes", false));
-        } 
-      // If there are saved notes, filling the note list array with note titles (<li> objects)
-        for (i = 0; i < notes.length; i++) {
-          let $li = create$li(notes[i].title, notes[i].text, notes[i].id, true);
-          console.log($li);
-          noteListItems.push($li);
-        } 
+        } else {
+          for (let i = 0; i < notes.length; i++) {
+            const $li = create$li(notes[i].title, notes[i].text, notes[i].id);
+            noteListItems.push($li);
+          }
+        }
       // The objects are appended to the sidebar <ul> list
         $noteList.append(noteListItems);
     };
@@ -105,6 +105,7 @@ const $noteList = $(".list-group");
         id: Date.now()
       };
       saveNote(newNote).then(() => {
+        activeNote = newNote;
         getAndRenderNotes();
         renderActiveNote();
       });
@@ -119,13 +120,14 @@ const $noteList = $(".list-group");
     const handleNoteDelete = event => {
       // Preventing: note list listener (see below) from being called when deleteBtn clicked
       event.stopPropagation();
-      const note = $(this).parent(".list-group-item").data();
+      const clicked = event.target;
+      const noteID = clicked.parentElement.getAttribute("id");
       // Emptying: activeNote (if corresponds to note being deleted)
-      if (activeNote.id === note.id) {
+      if (activeNote.id === noteID) {
         activeNote = {};
       }
       // Deleting: clicked note; Updating: note list and active note view 
-      deleteNote(note.id).then(() => {
+      deleteNote(noteID).then(() => {
         getAndRenderNotes();
         renderActiveNote();
       });

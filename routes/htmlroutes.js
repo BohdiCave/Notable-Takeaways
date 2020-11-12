@@ -17,16 +17,15 @@ module.exports = (app) => {
     });
 
     app.delete("/api/notes/:id", (req, res) => {
-        console.log(req);
         let notes = db;
-        
         notes.forEach(note => {
-            if (note.id === req.url) /* check on what the syntax should be */ {
-                notes.pop(note);
+            if (note.id === req.params.id) {
+                notes.splice(note, 1);
             }
         });
-        
-        fs.writeFile("db/db.json", res.json(notes));
+        notes = JSON.stringify(notes, null, 2);
+        fs.writeFile("db/db.json", notes, err => {if (err) throw err;});
+        res.json(notes);
     });
 
     app.get("/notes", (req, res) => {
