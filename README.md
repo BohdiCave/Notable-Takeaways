@@ -16,6 +16,11 @@ An express.js app to write, save, and delete notes using JSON data format for st
     * POST new notes to the database, automatically refreshing the note list
     * DELETE old notes from the database, automatically refreshing the note list
 
+## Possible Extensions
+
+* A major convenience would be to allow note editing and updating.
+* Time permitting, I'd also add a more distinct set of stylings 
+
 ## Links
 
 [Deployed application on Heroku](https://sleepy-beach-08943.herokuapp.com/) 
